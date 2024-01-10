@@ -5,8 +5,8 @@ async function listUsers(){
   return users;
 }
 
-async function createUser(item){
-    return await userModel.create(item);
+async function createUser(user){
+    return await userModel.create(user);
 }
 
 async function getUser(id_parame){
