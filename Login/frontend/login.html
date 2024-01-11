@@ -33,7 +33,7 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, password, admin}),
+                body: JSON.stringify({ username, password}),
             })
                 .then(response => response.json())
                 .then(data => {
@@ -41,7 +41,7 @@
                         // Armazenar informação de login na sessionStorage
                         sessionStorage.setItem('isLoggedIn', true);
                         // Armazenar informação de admin na sessionStorage
-                        sessionStorage.setItem('isAdmin', true );
+                        sessionStorage.setItem('isAdmin', data.User.admin );
                         // Redirecionar para a página Principal
                         window.location.href = 'principal.html';
                     } else {

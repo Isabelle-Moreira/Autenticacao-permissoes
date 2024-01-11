@@ -11,13 +11,20 @@
         <h2>Bem-vindo à tela Principal!</h2>
         <p>Esta é a página principal da sua aplicação.</p>
         <button onclick="logout()">Logout</button>
+        <button id="administra">Administrar Site</button>
     </div>
     <script>
+
+        const botao = document.getElementById("administra")
+        botao.style.display = "none"
+
+
+
 
         function logout() {
             // Limpar informação de login da sessionStorage
             sessionStorage.removeItem('isLoggedIn');
-
+            sessionStorage.removeItem('isAdmin')
             // Redirecionar de volta para a página de Login
             window.location.href = 'login.html';
         }
@@ -26,10 +33,14 @@
         // Verificar se o usuário está logado ao carregar a página
         window.onload = function () {
             const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            const isAdminIn = JSON.parse(sessionStorage.getItem('isAdmin'));
 
             if (!isLoggedIn) {
                 // Redirecionar para a página de Login se não estiver logado
                 window.location.href = 'login.html';
+            }
+            if(isAdminIn){
+                botao.style.display = "block"
             }
         }
     </script>

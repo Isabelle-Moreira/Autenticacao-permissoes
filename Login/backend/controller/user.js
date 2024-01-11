@@ -34,8 +34,17 @@ async function UpdateUser(id_param, itemAtalualizado){
   return atualizado;
 }
 
+async function LogUser(login_paramentro, senha_parametro){
+  const User= await userModel.findOne({where: {login:`${login_paramentro}`, senha:`${senha_parametro}`}})
+  if(!User){
+    throw new Error(`Credenciais invalidas`);
+  }else{
+    return User
+  }
+}
 
 
 
 
-module.exports = {createUser, getUser, listUsers, deleteUser,UpdateUser}
+
+module.exports = {createUser, getUser, listUsers, deleteUser,UpdateUser,LogUser}
