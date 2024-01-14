@@ -5,6 +5,7 @@ const app = express();
 const port = 3000;
 const controller = require('./controller/user')
 const db = require('./database/db')
+const md5 = require('md5')
 
 db.sync(async () => { 
     console.log(`Banco de dados conectado: ${process.env.DB_NAME}`) 
@@ -17,7 +18,8 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/api/login', (req, res) => {
-    const { username, password} = req.body;
+    const  username = req.body.username;
+    const password = md5(req.body.password)
 
 
     controller.LogUser(username, password).then((User)=>{
@@ -27,6 +29,22 @@ app.post('/api/login', (req, res) => {
     })
 
 });
+
+    app.post('/api/cadastro', (req, res) => {
+    const senhacriptografada = md5(req.body.senha);
+    
+    controller.createUser({
+      login: req.body.login,
+      senha: senhacriptografada,
+      admin: req.body.admin
+    })
+      .then((usuario) => res.send(usuario))
+      .catch((err) => {
+        console.log('Erro no cadastro do item', JSON.stringify(err))
+        return res.status(400).send(err)
+      })
+  })
+
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
